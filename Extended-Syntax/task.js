@@ -12,20 +12,18 @@ function calculateQuadraticEquation(){
 
 function getResult(a,b,c){
     let d = b ** 2 - 4 * a * c;
-    let arr = [];
+    let result = [];
 
     if (d > 0) {
         let x1 = (-b + Math.sqrt(d)) / (2 * a);
         let x2 = (-b - Math.sqrt(d)) / (2 * a);
-        arr.push(x1);
-        arr.push(x2);
+        result.push(x1);
+        result.push(x2);
     } else if (d == 0) {
         let x = (-b + d) / (2 * a);
-        arr.push(x);
+        result.push(x);
     } 
-    return arr;
-    // код для задачи №1 писать здесь
-    //return x;
+    return result;
 }
 
 let result = getResult(2, 4, -3);
@@ -39,24 +37,15 @@ function calculateAverageRating(){
 
 function getAverageMark(marks){
     let sum = 0;
-    let averageMark;
     if (marks.length > 5) {
         console.log('Вы ввели больше пяти оценок');
-        let marks2 = marks.slice(0, 5);
-    
-        for (let i = 0; i < marks2.length; i++) {
-            sum = sum + marks2[i];
-        }
-        averageMark = sum / marks2.length;
-    } else {
-        for (let i = 0; i < marks.length; i++) {
-            sum = sum + marks[i];
-        }
-        averageMark = sum / marks.length;
+        marks.splice(5);   
     }
-    return averageMark;
-    // код для задачи №2 писать здесь
-    //return averageMark;
+        for (let i = 0; i < marks.length; i++) {
+            sum += marks[i];
+        }
+    
+    return sum / marks.length;
 }
 
 
@@ -80,8 +69,4 @@ function askDrink(name, dateOfBirthday) {
     }
     console.log(result);
     return result;
-
-    // код для задачи №3 писать здесь
-    //console.log(result)
-    //return result;
 }
