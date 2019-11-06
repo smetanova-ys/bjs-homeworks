@@ -26,9 +26,6 @@ function getResult(a,b,c){
     return result;
 }
 
-let result = getResult(2, 4, -3);
-console.log(result);
-
 function calculateAverageRating(){
     let marks = window.marks.value.split("").map(Number).filter((n)=> !isNaN(n) && n > 0);
     let averageMark = getAverageMark(marks);
@@ -41,9 +38,9 @@ function getAverageMark(marks){
         console.log('Вы ввели больше пяти оценок');
         marks.splice(5);   
     }
-        for (let i = 0; i < marks.length; i++) {
-            sum += marks[i];
-        }
+    for (let i = 0; i < marks.length; i++) {
+        sum += marks[i];
+    }
     
     return sum / marks.length;
 }
