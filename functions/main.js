@@ -33,6 +33,8 @@ function showSolutionsMessage(a, b, c) {
         console.log(`Уравнение имеет два корня Х1 = ${result.roots[0]}, X2 = ${result.roots[1]}`);
     }
 }
+showSolutionsMessage(1, 2, 3);
+showSolutionsMessage(7, 20, -3);
 showSolutionsMessage(2, 4, 2);
 
 console.log('Задача № 2');
