@@ -48,7 +48,7 @@ let data = {
     poetry: [5, 3, 4],
     chemistry: [2],
     french: [4, 4]
-}
+};
 
 function getAverageScore(data) {
     let mean = [];
