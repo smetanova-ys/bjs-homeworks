@@ -155,66 +155,73 @@ class StudentLog {
 
     constructor(name) {
         this.name = name;
-        this.report = {};
+        this.subjects = [];
+        this.marks = [];
     }
 
-    getName(name) {
+    getName() {
         return this.name;
     }
 
     addGrade(grade, subject) {
-        if (typeof grade !== 'number' || grade < 0 || grade > 5) {
-            console.log(`Вы пытались поставить оценку ${grade} по предмету ${subject}. Допускаются только числа от 1 до 5.`)
+      
+        if (grade > 0 && grade < 6) {
+          this.subjects.push(subject);
+          this.marks.push(grade);
+          let item = 0;
+          for (let i = 0; i < this.subjects.length; i++) {
+            if (subject === this.subjects[i]) {
+              item += 1;
+            }
+          }
+          return item;
+  
         } else {
-            this.report[subject] = [];
-            this.report[subject].push(grade);
-            return this.report[subject].length;
+           console.log(`Вы пытались поставить оценку ${grade} по предмету ${subject}. Допускаются только числа от 1 до 5.`);
         }
-    }
+  
+      }
 
-    getAverageBySubject(subject) {
-        
+      getAverageBySubject(subject) {
         let sum = 0;
-        
-        for (let key in this.report) {
-            if (key == subject) {
-                sum += this.report[key];
-            } else {
-                return 0;
-            }
+        let amount = 0;
+  
+        for (let i = 0; i < this.subjects.length; i++) {
+          if (subject == this.subjects[i]) {
+              sum += this.marks[i];
+              amount += 1;
+          } 
         }
-        console.log(sum);
-        return sum / this.addGrade(grade, subject);
-    }
+        return sum / amount;
+      }
 
-    getTotalAverage() {
-        let mean = [];
+      getTotalAverage() {
         let total = 0;
-        if (this.report.valueOf() !== 'undefined') {
-            for (let item in this.report) {
-                total += this.report[item];
-                mean.push(item);
-            }
-            return total / mean.length;
+        if (this.marks.valueOf() == 'undefined') {
+          return 0;
         } else {
-            return 0;
+          for (let i = 0; i < this.marks.length; i++) {
+            total += this.marks[i];
+          }
+          return total / this.marks.length;
         }
-    }
-}
-
-let log = new StudentLog('Олег Никифоров');
-console.log(log.getName(name));
-console.log(log.addGrade(3, 'algebra'));
-console.log(log.addGrade('отлично', 'math'));
-
-log.addGrade(2, 'algebra');
-log.addGrade(4, 'algebra');
-log.addGrade(5, 'geometry');
-log.addGrade(4, 'geometry');
-console.log(log.report);
-
-console.log(log.getAverageBySubject('algebra'));
-console.log(log.getAverageBySubject('geometry'));
-console.log(log.getAverageBySubject('math'));
-
-console.log(log.getTotalAverage());
+      }
+  }
+  
+  let log = new StudentLog('Олег Никифоров');
+  console.log(log.getName());
+  console.log(log.addGrade('отлично', 'math'));
+  console.log(log.addGrade(25, 'geometry'));
+  
+  log.addGrade(2, 'algebra');
+  log.addGrade(4, 'algebra');
+  log.addGrade(5, 'geometry');
+  log.addGrade(4, 'geometry');
+  console.log(log.subjects);
+  console.log(log.marks);
+  
+  console.log(log.getAverageBySubject('geometry'));
+  console.log(log.getAverageBySubject('algebra'));
+  console.log(log.getAverageBySubject('math'));
+  
+  console.log(log.getTotalAverage());
