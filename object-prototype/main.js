@@ -14,9 +14,7 @@ function checkBirthday(birthday) {
     let diff = now - dateOfbirth;
     let age = diff / (1000 * 60 * 60 * 24 * 365.25);
     
-    if (age >= 18) {
-        return true;
-    }
+        return age >= 18;
 }
 
 function initPrintAnimalSound() {
@@ -30,11 +28,11 @@ function initPrintAnimalSound() {
 }
 
 function getAnimalSound(animal) {
-    let sound = animal.sound;
 
     if (animal.valueOf() === 'undefined') {
         return null;
     } else {
+        let sound = animal.sound;
         return sound;
     }
 }
