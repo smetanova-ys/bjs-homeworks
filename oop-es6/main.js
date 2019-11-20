@@ -8,7 +8,7 @@ class Weapon {
         this.attack = attack;
         this.durability = durability;
         this.range = range;
-        this.partialDurability = this.durability * 0.3;
+        this.primalDurability = this.durability;
     }
 
     takeDamage(damage) {
@@ -22,12 +22,12 @@ class Weapon {
     }
 
     getDamage() {
-        if (this.durability >= this.partialDurability) {
-            return this.attack;
-        } else if (this.durability == 0) {
+        if (this.durability === 0) {
             return 0;
-        } else {
+        } else if (this.durability < this.primalDurability * 0.3) {
             return this.attack / 2;
+        } else {
+            return this.attack;
         }
     }
 
@@ -155,8 +155,7 @@ class StudentLog {
 
     constructor(name) {
         this.name = name;
-        this.subjects = [];
-        this.marks = [];
+        this.report = {};
     }
 
     getName() {
@@ -164,47 +163,47 @@ class StudentLog {
     }
 
     addGrade(grade, subject) {
-      
-        if (grade > 0 && grade < 6) {
-          this.subjects.push(subject);
-          this.marks.push(grade);
-          let item = 0;
-          for (let i = 0; i < this.subjects.length; i++) {
-            if (subject === this.subjects[i]) {
-              item += 1;
-            }
-          }
-          return item;
-  
-        } else {
-           console.log(`Вы пытались поставить оценку ${grade} по предмету ${subject}. Допускаются только числа от 1 до 5.`);
+
+        if (!this.report[subject]) {
+            this.report[subject] = [];
         }
-  
+
+        if (grade > 0 && grade < 6) {
+            this.report[subject].push(grade);
+            return this.report[subject].length;
+        } else {
+            console.log(`Вы пытались поставить оценку ${grade} по предмету ${subject}. Допускаются только числа от 1 до 5.`);
+            return this.report[subject].length;
+        }
+        
       }
 
       getAverageBySubject(subject) {
-        let sum = 0;
-        let amount = 0;
-  
-        for (let i = 0; i < this.subjects.length; i++) {
-          if (subject == this.subjects[i]) {
-              sum += this.marks[i];
-              amount += 1;
-          } 
-        }
-        return sum / amount;
+          let sum = 0;
+
+          if (!this.report[subject] || this.report[subject].valueOf() == false) {
+              return 0;
+          } else {
+              let marks = this.report[subject];
+              for (let i = 0; i < marks.length; i++) {
+                  sum += marks[i];
+              }
+              return sum / marks.length;
+          }
       }
 
       getTotalAverage() {
         let total = 0;
-        if (this.marks.valueOf() == 'undefined') {
-          return 0;
-        } else {
-          for (let i = 0; i < this.marks.length; i++) {
-            total += this.marks[i];
-          }
-          return total / this.marks.length;
-        }
+        let amount = 0;
+
+        for (let item in this.report) {
+            total += this.getAverageBySubject(item);
+            if (this.getAverageBySubject(item) > 0) {
+                amount += 1;
+            }
+        }  
+        let totalAverage = total / amount;
+        return totalAverage;
       }
   }
   
@@ -217,8 +216,7 @@ class StudentLog {
   log.addGrade(4, 'algebra');
   log.addGrade(5, 'geometry');
   log.addGrade(4, 'geometry');
-  console.log(log.subjects);
-  console.log(log.marks);
+  console.log(log.report);
   
   console.log(log.getAverageBySubject('geometry'));
   console.log(log.getAverageBySubject('algebra'));
